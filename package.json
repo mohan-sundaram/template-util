@@ -1,0 +1,23 @@
+{
+  "name": "@mor/template-util",
+  "version": "1.0.0",
+  "description": "A simple utility to parse template files",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "link": "npm run-script build && npm link"
+  },
+  "author": "mohan.r",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^10.2.1",
+    "mustache": "^4.2.0",
+    "source-map-loader": "^4.0.1",
+    "ts-loader": "^9.4.2"
+  },
+  "devDependencies": {
+    "@types/mustache": "^4.2.2"
+  }
+}
