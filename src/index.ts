@@ -36,8 +36,11 @@ export function renderFileSync(src: string, dest: string, data: object, ops?: an
 
 export function renderFolderSync(src: string, dest: string, data: any, ops?: RenderFolderOps) {
 
+    src = path.normalize(src);
+    dest = path.normalize(dest);
     ops = processOps(ops);
-    const result = globSync(`${src}/**/*`, { withFileTypes: true });
+    const globSearch = `${src.replace(path.sep,path.posix.sep)}/**/*`
+    const result = globSync(globSearch, { withFileTypes: true });
     const parsePath = (file: string) => mustache.render(file, data)
     const replaceBaseDir = (file: string) => file.replace(src, dest)
 
@@ -64,10 +67,12 @@ export function renderFolderSync(src: string, dest: string, data: any, ops?: Ren
             const isIncluded = ops?.includeFiles.some(pattern => minimatch(path.basename(file), pattern))
 
             if (isIncluded) {
+                console.log(`parsing file ${file}`)
                 const template = readFileSync(file);
                 const parsed = mustache.render(template.toString(), data);
                 writeFileSync(destPath, parsed);
             } else {
+                console.log(`copying file ${file}`)
                 copyFileSync(file, destPath);
             }
 
